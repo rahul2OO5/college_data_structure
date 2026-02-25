@@ -56,6 +56,9 @@ void delete(int *const arr, int *size, int index) {
 }
 
 void removeNumber(int *const arr, int *size) {
+  if (*size <= 1) {
+    return;
+  }
   while (1) {
     int even_index = -1;
     int odd_index = -1;
