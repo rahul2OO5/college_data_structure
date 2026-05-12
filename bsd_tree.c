@@ -249,7 +249,7 @@ Node *delete(Node *root, Information info) {
     root->children[1] = delete(root->children[1], tempInfo);
   } else {
     i32 pos = (root->value < info.value);
-    root->children[pos] = delete(root->children[pos], info);
+    root->children[pos] = delete(root->children[1], info);
   }
   return root;
 }

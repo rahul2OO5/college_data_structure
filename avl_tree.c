@@ -6,16 +6,11 @@
 
 typedef int32_t i32;
 
-// We added 'height' to the struct
 typedef struct Node {
   i32 value;
   i32 height;
   struct Node *children[2];
 } Node;
-
-// ==========================================
-// UTILITY FUNCTIONS
-// ==========================================
 
 static inline i32 getMax(i32 a, i32 b) { return (a > b) ? a : b; }
 
@@ -25,7 +20,6 @@ static inline i32 getHeight(Node *node) {
   return node->height;
 }
 
-// Balance is Left Height - Right Height
 static inline i32 getBalance(Node *node) {
   if (node == NULL)
     return 0;
@@ -39,7 +33,7 @@ Node *initNode(i32 value) {
     return NULL;
   }
   newNode->value = value;
-  newNode->height = 1; // New nodes start with a height of 1
+  newNode->height = 1;
   newNode->children[0] = NULL;
   newNode->children[1] = NULL;
   return newNode;
@@ -52,9 +46,7 @@ static Node *findMin(Node *root) {
   return root;
 }
 
-// ==========================================
 // AVL ROTATIONS (Branchless Magic!)
-// ==========================================
 // dir = 0: Rotate Left  (Right child goes up)
 // dir = 1: Rotate Right (Left child goes up)
 static Node *rotate(Node *root, i32 dir) {
@@ -64,7 +56,6 @@ static Node *rotate(Node *root, i32 dir) {
   root->children[1 - dir] = newRoot->children[dir];
   newRoot->children[dir] = root;
 
-  // Update heights (must update original root first, then newRoot)
   root->height =
       1 + getMax(getHeight(root->children[0]), getHeight(root->children[1]));
   newRoot->height = 1 + getMax(getHeight(newRoot->children[0]),
@@ -72,10 +63,6 @@ static Node *rotate(Node *root, i32 dir) {
 
   return newRoot;
 }
-
-// ==========================================
-// INSERTION & DELETION
-// ==========================================
 
 Node *insert(Node *root, i32 value) {
   // 1. Standard BST Insertion
